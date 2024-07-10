@@ -1,0 +1,48 @@
+services:
+  gateway-service:
+    build:
+      context: .
+      dockerfile: ./apps/gateway/Dockerfile
+      target: ${NODE_ENV}
+    container_name: gateway-service
+    command: pnpm run start:debug gateway
+    depends_on:
+      - rabbitmq
+    ports:
+      - 3000:3000
+      - 9229:9229
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: always
+    networks:
+      - network
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./apps/user/Dockerfile
+      target: ${NODE_ENV}
+    container_name: user-service
+    command: pnpm run start:debug user
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: always
+    networks:
+      - network
+
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: always
+    networks:
+      - network
+
+networks:
+  network:
