@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { All, Controller, Req, Res } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { ClientProxyFactoryService } from './services';
 
@@ -6,9 +6,9 @@ import { ClientProxyFactoryService } from './services';
 export class GatewayController {
   constructor(private clientProxyFactoryService: ClientProxyFactoryService) {}
 
-  @Get('*')
+  @All('*')
   async proxy(@Req() req, @Res() res) {
-    const { url, method, headers, body } = req;
+    const { url, method, body } = req;
     const path = url.split('/')[1];
 
     const client = this.clientProxyFactoryService.getClientProxy(path);
@@ -18,7 +18,7 @@ export class GatewayController {
     }
 
     const response = await firstValueFrom(
-      client.send('user-action', { url, method, headers, body }),
+      client.send(method.toLowerCase(), body),
     );
 
     return res.status(200).send(response);

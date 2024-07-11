@@ -4,6 +4,7 @@ import { UserModule } from './user.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(UserModule);
+  app.init();
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

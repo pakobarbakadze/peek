@@ -6,8 +6,13 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @MessagePattern('user-action')
-  getHello(@Payload() data: any) {
-    return { status: 'success', data };
+  @MessagePattern('post')
+  createUser(@Payload() data: any) {
+    return this.userService.createUser(data);
+  }
+
+  @MessagePattern('get')
+  getUser(@Payload() data: any) {
+    return this.userService.getUser(data.name);
   }
 }

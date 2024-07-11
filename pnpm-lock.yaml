@@ -26,6 +26,9 @@ importers:
       amqplib:
         specifier: ^0.10.4
         version: 0.10.4
+      neo4j-driver:
+        specifier: ^5.22.0
+        version: 5.22.0
       reflect-metadata:
         specifier: ^0.2.0
         version: 0.2.2
@@ -989,6 +992,9 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
+
+  buffer@6.0.3:
+    resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -2095,6 +2101,15 @@ packages:
 
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+
+  neo4j-driver-bolt-connection@5.22.0:
+    resolution: {integrity: sha512-tpw4URUn8AkpIPaUnz79B3X9hypZYnTKlm7IPrThKNIEOM8U2hUV7/mLoNcaqX39ebiWbuFy4EKK0DOQ+fdd+g==}
+
+  neo4j-driver-core@5.22.0:
+    resolution: {integrity: sha512-tta/zBfbjm24uGgumckYgVxqnTDenPNo2BQwy+eOD7H2tn9oP3U/OikzOvQuRzfRkRtag0ynrTjXw0JsAXZJkw==}
+
+  neo4j-driver@5.22.0:
+    resolution: {integrity: sha512-DmyUBUMZWOGYIJCYNdze3pCqJE7ZcK3wGORt+WG+yfWnhWUwLS8tT8N4I8FboSl7i7i3X710h6vhWh333n7CNQ==}
 
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
@@ -4025,6 +4040,11 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
+  buffer@6.0.3:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
   busboy@1.6.0:
     dependencies:
       streamsearch: 1.1.0
@@ -5325,6 +5345,20 @@ snapshots:
   negotiator@0.6.3: {}
 
   neo-async@2.6.2: {}
+
+  neo4j-driver-bolt-connection@5.22.0:
+    dependencies:
+      buffer: 6.0.3
+      neo4j-driver-core: 5.22.0
+      string_decoder: 1.3.0
+
+  neo4j-driver-core@5.22.0: {}
+
+  neo4j-driver@5.22.0:
+    dependencies:
+      neo4j-driver-bolt-connection: 5.22.0
+      neo4j-driver-core: 5.22.0
+      rxjs: 7.8.1
 
   node-abort-controller@3.1.1: {}
 
