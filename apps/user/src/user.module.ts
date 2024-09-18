@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { Neo4jModule } from './neo4j/neo4j.module';
 import { UserController } from './user.controller';
 import UserRepository from './user.repository';
-import { UserService } from './user.service';
+import { ConfigModule } from '@nestjs/config';
+import { Neo4jService, UserService } from './services';
 
 @Module({
-  imports: [Neo4jModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true })],
   controllers: [UserController],
-  providers: [UserService, UserRepository],
+  providers: [UserService, Neo4jService, UserRepository],
 })
 export class UserModule {}
