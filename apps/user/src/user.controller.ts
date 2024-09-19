@@ -1,18 +1,27 @@
+import {
+  CreateUserRequest,
+  GetUserRequest,
+  UserResponse,
+  UserServiceController,
+  UserServiceControllerMethods,
+} from '@app/common/proto/user';
+import { Observable } from 'rxjs';
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UserService } from './services';
+import { UserService } from './user.service';
 
 @Controller()
-export class UserController {
+@UserServiceControllerMethods()
+export class UserController implements UserServiceController {
   constructor(private readonly userService: UserService) {}
 
-  @MessagePattern('post')
-  createUser(@Payload() data: any) {
-    return this.userService.createUser(data);
+  getUser(
+    request: GetUserRequest,
+  ): Promise<UserResponse> | Observable<UserResponse> | UserResponse {
+    return this.userService.getUser(request.name);
   }
-
-  @MessagePattern('get')
-  getUser(@Payload() data: any) {
-    return this.userService.getUser(data.name);
+  createUser(
+    user: CreateUserRequest,
+  ): Promise<UserResponse> | Observable<UserResponse> | UserResponse {
+    return this.userService.createUser(user);
   }
 }

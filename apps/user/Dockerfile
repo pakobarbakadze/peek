@@ -4,6 +4,9 @@ WORKDIR /usr/src/app
 
 COPY package.json pnpm-lock.yaml ./
 
+RUN apk add --update python3 make g++\
+    && rm -rf /var/cache/apk/*
+
 RUN npm install -g pnpm \
     && pnpm install
 

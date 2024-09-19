@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
-import { Neo4jService } from './services';
+import { Neo4jService } from '@app/common/neo4j/neo4j.service';
 
 @Injectable()
 export default class UserRepository {
   constructor(private readonly neo4jService: Neo4jService) {}
 
-  public async createUser(user: User) {
+  public async createUser(user: User): Promise<User> {
     const session = this.neo4jService.getSession();
 
     try {
@@ -15,7 +15,9 @@ export default class UserRepository {
         { name: user.name },
       );
 
-      return result.records.map((record) => record.get('n').properties);
+      return result.records.map(
+        (record) => record.get('n').properties,
+      )[0] as User;
     } finally {
       session.close();
     }
@@ -30,7 +32,9 @@ export default class UserRepository {
         { name },
       );
 
-      return result.records.map((record) => record.get('n').properties)[0];
+      return result.records.map(
+        (record) => record.get('n').properties,
+      )[0] as User;
     } finally {
       session.close();
     }

@@ -1,25 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { GatewayController } from './gateway.controller';
-import { ClientProxyFactoryService } from './services';
+import { join } from 'path';
+import { UserController } from './controllers/user.controller';
+import { USER_PACKAGE_NAME } from '@app/common/proto/user';
+import { USER_SERVICE } from './types/constants/services.const';
 
 @Module({
   imports: [
     ClientsModule.register([
       {
-        name: 'USER_SERVICE',
-        transport: Transport.RMQ,
+        name: USER_SERVICE,
+        transport: Transport.GRPC,
         options: {
-          urls: ['amqp://rabbitmq:5672'],
-          queue: 'user_queue',
-          queueOptions: {
-            durable: false,
-          },
+          url: 'user-service:50051',
+          package: USER_PACKAGE_NAME,
+          protoPath: join(__dirname, '../user.proto'),
         },
       },
     ]),
   ],
-  controllers: [GatewayController],
-  providers: [ClientProxyFactoryService],
+  controllers: [UserController],
 })
 export class GatewayModule {}

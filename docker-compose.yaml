@@ -27,6 +27,8 @@ services:
     command: pnpm run start:debug user
     depends_on:
       - rabbitmq
+    ports:
+      - 50051:50051
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
