@@ -5,6 +5,7 @@ package user;
 service UserService {
   rpc GetUser (GetUserRequest) returns (UserResponse);
   rpc CreateUser (CreateUserRequest) returns (UserResponse);
+  rpc MakeFriends (MakeFriendsRequest) returns (EmptyResponse);
 }
 
 message GetUserRequest {
@@ -23,3 +24,10 @@ message CreateUserRequest {
   string name = 1;
   string email = 2;
 }
+
+message MakeFriendsRequest {
+  string user1Name = 1;
+  string user2Name = 2;
+}
+
+message EmptyResponse {}

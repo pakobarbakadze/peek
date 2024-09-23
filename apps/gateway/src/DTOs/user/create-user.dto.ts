@@ -14,11 +14,4 @@ export default class CreateUserDto {
     required: true,
   })
   email: string;
-
-  @ApiProperty({
-    description: 'The password of the user',
-    type: String,
-    required: true,
-  })
-  password: string;
 }

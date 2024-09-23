@@ -1,6 +1,8 @@
 import {
   CreateUserRequest,
+  EmptyResponse,
   GetUserRequest,
+  MakeFriendsRequest,
   UserResponse,
   UserServiceController,
   UserServiceControllerMethods,
@@ -24,5 +26,11 @@ export class UserController implements UserServiceController {
     user: CreateUserRequest,
   ): Promise<UserResponse> | Observable<UserResponse> | UserResponse {
     return this.userService.createUser(user);
+  }
+
+  makeFriends(
+    request: MakeFriendsRequest,
+  ): Promise<EmptyResponse> | Observable<EmptyResponse> | EmptyResponse {
+    return this.userService.makeFriends(request.user1Name, request.user2Name);
   }
 }

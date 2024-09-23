@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { USER_SERVICE } from '../types/constants/services.const';
-import { CreateUserDto } from '../DTOs/user';
+import { CreateUserDto, MakeFriendsDto } from '../DTOs/user';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user')
@@ -33,5 +33,10 @@ export class UserController implements OnModuleInit {
   @Get(':name')
   public get(@Param('name') name: string) {
     return this.userService.getUser({ name });
+  }
+
+  @Post('make-friends')
+  public makeFriends(@Body() makeFriendsDto: MakeFriendsDto) {
+    return this.userService.makeFriends(makeFriendsDto);
   }
 }

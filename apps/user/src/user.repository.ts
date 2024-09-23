@@ -11,11 +11,14 @@ export default class UserRepository {
 
     try {
       const result = await session.run(
-        'CREATE (n:User {name: $name}) RETURN n',
-        { name: user.name },
+        'CREATE (u:User {name: $name, email:$email}) RETURN u',
+        {
+          name: user.name,
+          email: user.email,
+        },
       );
 
-      return result.records.map((record) => record.get('n').properties)[0];
+      return result.records.map((record) => record.get('u').properties)[0];
     } finally {
       session.close();
     }
@@ -26,11 +29,27 @@ export default class UserRepository {
 
     try {
       const result = await session.run(
-        'MATCH (n:User {name: $name}) RETURN n',
+        'MATCH (u:User {name: $name}) RETURN u',
         { name },
       );
 
-      return result.records.map((record) => record.get('n').properties)[0];
+      return result.records.map((record) => record.get('u').properties)[0];
+    } finally {
+      session.close();
+    }
+  }
+
+  public async makeFriends(user1Name: string, user2Name: string) {
+    const session = this.neo4jService.getSession();
+
+    try {
+      await session.run(
+        `
+        MATCH (u1:User {name: $user1Name}), (u2:User {name: $user2Name})
+        CREATE (u1)-[:FRIEND]->(u2)
+        `,
+        { user1Name, user2Name },
+      );
     } finally {
       session.close();
     }
