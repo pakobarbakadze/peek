@@ -5,11 +5,11 @@ import UserRepository from './user.repository';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  public async createUser(user: any): Promise<any> {
-    return this.userRepository.createUser(user);
-  }
-
   public async getUser(name: string) {
     return this.userRepository.getUser(name);
+  }
+
+  public async createUser(user: any): Promise<any> {
+    return this.userRepository.createUser(user);
   }
 }

@@ -10,7 +10,10 @@ import {
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { USER_SERVICE } from '../types/constants/services.const';
+import { CreateUserDto } from '../DTOs/user';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController implements OnModuleInit {
   private userService: UserServiceClient;
@@ -23,12 +26,12 @@ export class UserController implements OnModuleInit {
   }
 
   @Post()
-  public async create(@Body() createUserDto: any) {
+  public create(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
 
   @Get(':name')
-  public async get(@Param('name') name: string) {
+  public get(@Param('name') name: string) {
     return this.userService.getUser({ name });
   }
 }

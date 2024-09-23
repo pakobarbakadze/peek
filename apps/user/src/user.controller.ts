@@ -19,6 +19,7 @@ export class UserController implements UserServiceController {
   ): Promise<UserResponse> | Observable<UserResponse> | UserResponse {
     return this.userService.getUser(request.name);
   }
+
   createUser(
     user: CreateUserRequest,
   ): Promise<UserResponse> | Observable<UserResponse> | UserResponse {

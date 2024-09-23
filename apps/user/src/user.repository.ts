@@ -15,9 +15,7 @@ export default class UserRepository {
         { name: user.name },
       );
 
-      return result.records.map(
-        (record) => record.get('n').properties,
-      )[0] as User;
+      return result.records.map((record) => record.get('n').properties)[0];
     } finally {
       session.close();
     }
@@ -32,9 +30,7 @@ export default class UserRepository {
         { name },
       );
 
-      return result.records.map(
-        (record) => record.get('n').properties,
-      )[0] as User;
+      return result.records.map((record) => record.get('n').properties)[0];
     } finally {
       session.close();
     }
